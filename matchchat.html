@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synk - Chat</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#F5F3FF;color:#2D1B69;display:flex;flex-direction:column;min-height:100vh;}
+
+/* Navbar */
+nav{display:flex;justify-content:space-between;align-items:center;padding:15px 8%;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);box-shadow:0 4px 15px rgba(139,92,246,.1);}
+nav .logo{font-size:24px;font-weight:700;color:#8B5CF6;}
+nav ul{display:flex;list-style:none;gap:25px;}
+nav a{text-decoration:none;color:#444;font-weight:500;transition:.3s;}
+nav a:hover{color:#8B5CF6;}
+
+/* Chat Container */
+.chat-container{display:flex;flex:1;height:calc(100vh - 60px);margin-top:10px;}
+
+/* Matches List */
+.matches{width:280px;background:white;border-right:1px solid #ddd;overflow-y:auto;display:flex;flex-direction:column;}
+.matches h2{text-align:center;padding:15px 0;color:#8B5CF6;}
+.match-item{display:flex;align-items:center;padding:10px 15px;cursor:pointer;transition:.3s;border-bottom:1px solid #f0f0f0;}
+.match-item:hover{background:#F0F0FF;}
+.match-item img{width:50px;height:50px;border-radius:50%;margin-right:12px;object-fit:cover;}
+.match-item .match-name{font-weight:600;color:#333;}
+
+/* Chat Area */
+.chat-area{flex:1;display:flex;flex-direction:column;background:white;}
+.chat-header{padding:15px 20px;border-bottom:1px solid #ddd;font-weight:600;font-size:18px;color:#8B5CF6;}
+.messages{flex:1;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:10px;background:#F5F3FF;}
+.message{max-width:70%;padding:12px 16px;border-radius:20px;font-size:14px;position:relative;word-wrap:break-word;}
+.message.sent{align-self:flex-end;background:#8B5CF6;color:white;border-bottom-right-radius:2px;}
+.message.received{align-self:flex-start;background:white;color:#333;border-bottom-left-radius:2px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.chat-input{display:flex;padding:15px;border-top:1px solid #ddd;background:white;}
+.chat-input input{flex:1;padding:12px 16px;border-radius:25px;border:1px solid #ddd;outline:none;transition:.3s;}
+.chat-input input:focus{border-color:#8B5CF6;box-shadow:0 0 5px rgba(139,92,246,.3);}
+.chat-input button{padding:12px 20px;margin-left:10px;border:none;border-radius:25px;background:#8B5CF6;color:white;font-weight:600;cursor:pointer;transition:.3s;}
+.chat-input button:hover{transform:translateY(-2px);box-shadow:0 5px 15px rgba(139,92,246,.2);}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Synk</div>
+    <ul>
+        <li><a href="index2.html">Home</a></li>
+        <li><a href="swipe.html">Discover</a></li>
+        <li><a href="#">Chat</a></li>
+    </ul>
+</nav>
+
+<div class="chat-container">
+    <!-- Matches List -->
+    <div class="matches" id="matchesList">
+        <h2>Matches</h2>
+        <!-- Dynamic match items here -->
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+        <div class="chat-header" id="chatHeader">Select a match to chat</div>
+        <div class="messages" id="messages"></div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type a message..." disabled>
+            <button id="sendBtn" disabled>Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// Sample matched profiles
+const matches=[
+    {id:1,name:"Sophia Williams",img:"https://randomuser.me/api/portraits/women/68.jpg",messages:[
+        {type:"received",text:"Hey! Are you interested in the AI project?"},
+        {type:"sent",text:"Yes! I am excited to collaborate."}
+    ]},
+    {id:2,name:"Daniel Smith",img:"https://randomuser.me/api/portraits/men/35.jpg",messages:[
+        {type:"received",text:"Do you want to join our ML hackathon?"},
+        {type:"sent",text:"Absolutely, count me in!"}
+    ]},
+    {id:3,name:"Aisha Khan",img:"https://randomuser.me/api/portraits/women/44.jpg",messages:[
+        {type:"received",text:"Hi! Can we work on the UI/UX project together?"},
+        {type:"sent",text:"Sure, I would love to help!"}
+    ]}
+];
+
+const matchesList=document.getElementById('matchesList');
+const chatHeader=document.getElementById('chatHeader');
+const messagesDiv=document.getElementById('messages');
+const messageInput=document.getElementById('messageInput');
+const sendBtn=document.getElementById('sendBtn');
+
+let selectedMatch=null;
+
+// Render matches
+function renderMatches(){
+    matches.forEach(match=>{
+        const div=document.createElement('div');
+        div.className="match-item";
+        div.innerHTML=`<img src="${match.img}"><div class="match-name">${match.name}</div>`;
+        div.addEventListener('click',()=>selectMatch(match));
+        matchesList.appendChild(div);
+    });
+}
+
+// Select a match
+function selectMatch(match){
+    selectedMatch=match;
+    chatHeader.textContent=match.name;
+    renderMessages();
+    messageInput.disabled=false;
+    sendBtn.disabled=false;
+}
+
+// Render chat messages
+function renderMessages(){
+    messagesDiv.innerHTML="";
+    if(!selectedMatch) return;
+    selectedMatch.messages.forEach(msg=>{
+        const div=document.createElement('div');
+        div.className=`message ${msg.type}`;
+        div.textContent=msg.text;
+        messagesDiv.appendChild(div);
+    });
+    messagesDiv.scrollTop=messagesDiv.scrollHeight;
+}
+
+// Send message
+sendBtn.addEventListener('click',()=>{
+    const text=messageInput.value.trim();
+    if(text && selectedMatch){
+        selectedMatch.messages.push({type:"sent",text});
+        renderMessages();
+        messageInput.value="";
+        // Simulate reply
+        setTimeout(()=>{
+            selectedMatch.messages.push({type:"received",text:"Got it!"});
+            renderMessages();
+        },1000);
+    }
+});
+
+messageInput.addEventListener('keypress',e=>{
+    if(e.key==='Enter'){sendBtn.click();}
+});
+
+renderMatches();
+</script>
+
+</body>
+</html>
