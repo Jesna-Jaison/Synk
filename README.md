@@ -12,7 +12,7 @@ Jesna Jaison – Vidya Academy of Science and Technology
 
 Paviya T V – Vidya Academy of Science and Technology
 
-🌐 Hosted Project Link
+# 🌐 Hosted Project Link
 
 🔗 https://earnest-pasca-04f855.netlify.app/
 
@@ -108,7 +108,7 @@ Not applicable (Web-based application)
 # 🚀 Implementation
 
 📦 Installation
-git clone https://github.com/yourrepo/synk.git
+git clone https://github.com/Jesna-Jaison/Synk
 cd synk
 npm install
 ▶️ Run the Project
