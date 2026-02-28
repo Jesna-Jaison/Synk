@@ -1,4 +1,4 @@
-🎯 Synk
+# 🎯 Synk
 
 A Social Learning & Collaboration Platform for Students
 
