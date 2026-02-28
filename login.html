@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synk - Login / Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#F5F3FF;display:flex;justify-content:center;align-items:center;min-height:100vh;overflow-x:hidden;position:relative;}
+.shape{position:absolute;border-radius:50%;filter:blur(100px);opacity:.3;animation:float 12s ease-in-out infinite alternate;z-index:-1;}
+.shape1{width:300px;height:300px;background:#C4B5FD;top:-80px;left:-80px;}
+.shape2{width:250px;height:250px;background:#8B5CF6;bottom:-80px;right:-80px;}
+@keyframes float{from{transform:translateY(0);}to{transform:translateY(50px);}}
+
+/* Container */
+.container{background:white;padding:40px 50px;border-radius:100px;box-shadow:0 15px 40px rgba(139,92,246,.2);width:700px;position:relative;overflow:hidden;}
+.tab-buttons{display:flex;justify-content:center;margin-bottom:20px;gap:20px;}
+.tab-buttons button{padding:10px 25px;border:none;border-radius:25px;background:#eee;cursor:pointer;font-weight:600;transition:.3s;}
+.tab-buttons button.active{background:#8B5CF6;color:white;}
+
+/* Forms */
+form{display:none;flex-direction:column;}
+form.active{display:flex;}
+form input, form select, form textarea{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ddd;transition:.3s;}
+form input:focus, form select:focus, form textarea:focus{border-color:#8B5CF6;outline:none;box-shadow:0 0 5px rgba(139,92,246,.3);}
+form label{margin-top:10px;font-weight:500;color:#444;display:block;}
+form .btn{width:100%;padding:14px;margin-top:20px;border:none;border-radius:25px;background:#8B5CF6;color:white;font-weight:600;cursor:pointer;transition:.3s;}
+form .btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(139,92,246,.2);}
+.section-title{margin-top:15px;font-weight:600;color:#8B5CF6;font-size:14px;margin-bottom:5px;}
+.checkbox-group, .checkbox-group label{display:flex;align-items:center;gap:10px;margin-bottom:5px;}
+
+/* Success modal */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:.3s;}
+.modal.active{opacity:1;pointer-events:auto;}
+.modal-content{background:white;padding:30px 40px;border-radius:20px;text-align:center;animation:scaleIn 0.5s ease;}
+@keyframes scaleIn{from{transform:scale(0.8);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-content h2{color:#8B5CF6;margin-bottom:10px;}
+.modal-content button{padding:10px 25px;margin-top:15px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="shape shape1"></div>
+<div class="shape shape2"></div>
+
+<div class="container">
+    <div class="tab-buttons">
+        <button id="loginTab" class="active">Login</button>
+        <button id="signupTab">Sign Up</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="active">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <button type="submit" class="btn">Login</button>
+        
+    </form>
+
+    <!-- Sign Up Form -->
+    <form id="signupForm">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter your full name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter a password" required>
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" required>
+
+        <label for="gender">Gender</label>
+        <select id="gender" required>
+            <option value="">Select your gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+
+        <div class="section-title">Subjects you are interested in:</div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="subjects" value="Maths"> Maths</label>
+            <label><input type="checkbox" name="subjects" value="Science"> Science</label>
+            <label><input type="checkbox" name="subjects" value="Computer Science"> Computer Science</label>
+            <label><input type="checkbox" name="subjects" value="Arts"> Arts</label>
+            <label><input type="checkbox" name="subjects" value="Sports"> Sports</label>
+        </div>
+
+        <div class="section-title">Fields/Projects you are interested in:</div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="fields" value="AI"> AI</label>
+            <label><input type="checkbox" name="fields" value="Web Dev"> Web Development</label>
+            <label><input type="checkbox" name="fields" value="App Dev"> Mobile Apps</label>
+            <label><input type="checkbox" name="fields" value="Game Dev"> Game Development</label>
+            <label><input type="checkbox" name="fields" value="Data Science"> Data Science</label>
+        </div>
+
+        <div class="section-title">Sports you like:</div>
+        <div class="checkbox-group">
+            <label><input type="checkbox" name="sports" value="Football"> Football</label>
+            <label><input type="checkbox" name="sports" value="Basketball"> Basketball</label>
+            <label><input type="checkbox" name="sports" value="Tennis"> Tennis</label>
+            <label><input type="checkbox" name="sports" value="Swimming"> Swimming</label>
+        </div>
+
+        <div class="section-title">Your Preferences / Interests</div>
+        <textarea id="preferences" rows="3" placeholder="Write about your interests, hobbies, etc."></textarea>
+
+        <button type="submit" class="btn">Sign Up</button>
+        
+    </form>
+</div>
+
+<!-- Success Modal -->
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <h2 id="modalTitle"></h2>
+        <p id="modalMsg"></p>
+        <a href="index2.html">
+        <button onclick="closeModal()">Close</button>
+        </a>
+    </div>
+</div>
+
+<script type="module">
+
+// 🔥 Firebase Imports
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+// 🔥 Your Firebase Config (PUT YOUR REAL VALUES)
+const firebaseConfig = {
+  apiKey: "AIzaSyD0819UL5ciYMK3gixRnIC4ty6ySGxReAg",
+  authDomain: "synk-27b9a.firebaseapp.com",
+  projectId: "synk-27b9a",
+  appId: "1:404969184639:web:aec708cc8475d51c780e4a"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+// ----------------------
+// 🔹 YOUR ORIGINAL CODE
+// ----------------------
+
+// Tabs
+const loginTab = document.getElementById('loginTab');
+const signupTab = document.getElementById('signupTab');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+
+loginTab.addEventListener('click', ()=>{
+    loginTab.classList.add('active');
+    signupTab.classList.remove('active');
+    loginForm.classList.add('active');
+    signupForm.classList.remove('active');
+});
+
+signupTab.addEventListener('click', ()=>{
+    signupTab.classList.add('active');
+    loginTab.classList.remove('active');
+    signupForm.classList.add('active');
+    loginForm.classList.remove('active');
+});
+
+// Success Modal
+const successModal = document.getElementById('successModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalMsg = document.getElementById('modalMsg');
+
+function showModal(title, msg){
+    modalTitle.textContent = title;
+    modalMsg.textContent = msg;
+    successModal.classList.add('active');
+}
+
+function closeModal(){ 
+    successModal.classList.remove('active'); 
+}
+
+
+// ----------------------
+// 🔥 UPDATED LOGIN PART
+// ----------------------
+
+loginForm.addEventListener('submit', e=>{
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            window.location.href = "index2.html";
+        })
+        .catch((error) => {
+            showModal("Login Failed", error.message);
+        });
+});
+
+
+// ----------------------
+// 🔹 YOUR SIGNUP (UNCHANGED)
+// ----------------------
+
+signupForm.addEventListener('submit', e=>{
+    e.preventDefault();
+
+    const fullName = document.getElementById('fullName').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const dob = document.getElementById('dob').value;
+    const gender = document.getElementById('gender').value;
+
+    showModal("Sign Up Successful", `Welcome ${fullName}!\nEmail: ${email}`);
+    // Later we can connect signup to Firebase too
+});
+
+</script>
+
+</body>
+</html>
