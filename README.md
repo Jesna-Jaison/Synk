@@ -14,7 +14,7 @@ Paviya T V – Vidya Academy of Science and Technology
 
 🌐 Hosted Project Link
 
-🔗 https://synk-project.com
+🔗 https://earnest-pasca-04f855.netlify.app/
 
 # 📌 Project Description
 
@@ -151,7 +151,7 @@ Frontend updates UI
 
 Notifications triggered if required
 
-# 🔄 Application Workflow
+🔄 Application Workflow
 
 Sign Up / Login
 
@@ -163,66 +163,8 @@ Start Chat & Connect
 
 Join Groups & Projects
 
-# 📡 API Documentation
-Base URL
-https://api.synk-project.com
-🔍 GET /matches
 
-Description: Retrieve compatible matches
-
-Parameters:
-
-userId (string)
-
-Response:
-
-{
-  "status": "success",
-  "matches": []
-}
-💬 POST /chat
-
-Description: Send a message to a matched user
-
-Request Body:
-
-{
-  "from": "userId",
-  "to": "matchId",
-  "message": "Hello!"
-}
-
-Response:
-
-{
-  "status": "success",
-  "message": "Message sent"
-}
-🤖 AI Tools Used
-
-Tool: ChatGPT
-
-Purpose:
-
-Generate documentation
-
-Create workflow explanations
-
-Assist with architecture planning
-
-Code structuring guidance
-
-Human Contributions:
-
-UI/UX Design
-
-Backend Integration
-
-Testing
-
-Deployment
-
-👨‍💻 Team Contributions
+# 👨‍💻 Team Contributions
 
 Paviya T V:
 
@@ -244,17 +186,3 @@ Testing
 
 This project is licensed under the MIT License – a permissive and widely used open-source license.
 
-If you want, I can also:
-
-Make it more hackathon-impact style (judge attractive version)
-
-Add badges (GitHub, React, Firebase icons)
-
-Make a short crisp version
-
-Or convert it into a PDF submission format
-
-Tell me which version you need 👀🔥
-
-Voice chat ended
-40s
