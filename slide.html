@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synk - Project Slides</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: #f0f0ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.slide-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    background: linear-gradient(135deg, #8B5CF6, #C4B5FD);
+    color: white;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    border: 4px solid rgba(255,255,255,0.4);
+}
+
+.slide h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.slide p {
+    font-size: 18px;
+    max-width: 600px;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.nav-btn:hover {
+    background: rgba(255,255,255,0.6);
+    transform: translateY(-50%) scale(1.1);
+}
+
+#prev {
+    left: 10px;
+}
+
+#next {
+    right: 10px;
+}
+
+/* Dots */
+.dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 6px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: white;
+}
+
+@media(max-width: 600px){
+    .slide h2 { font-size: 24px; }
+    .slide p { font-size: 16px; }
+    .slide img { width: 140px; height: 140px; }
+}
+</style>
+</head>
+<body>
+
+<div class="slide-container">
+    <!-- Slide 1 -->
+    <div class="slide active">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Welcome">
+        <h2>Welcome to Synk</h2>
+        <p>Connect with like-minded students and find your perfect study match.</p>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide">
+        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Study Groups">
+        <h2>Join Study Groups</h2>
+        <p>Collaborate in groups, learn together, and achieve your goals faster.</p>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="Hackathons">
+        <h2>Participate in Hackathons</h2>
+        <p>Showcase your skills and meet like-minded students at exciting events.</p>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide">
+        <img src="https://cdn-icons-png.flaticon.com/512/1995/1995574.png" alt="Projects">
+        <h2>Work on Projects</h2>
+        <p>Find partners to build real projects and boost your portfolio.</p>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide">
+        <img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" alt="Sports">
+        <h2>Join Sports Teams</h2>
+        <p>Connect with students who share your interests in sports and activities.</p>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide">
+        <img src="https://cdn-icons-png.flaticon.com/512/3179/3179068.png" alt="Get Started">
+        <h2>Get Started with Synk!</h2>
+        <p>Sign up now and start connecting with your perfect match for projects and studies.</p>
+    </div>
+
+    <button class="nav-btn" id="prev">&#10094;</button>
+    <button class="nav-btn" id="next">&#10095;</button>
+
+    <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+</div>
+
+<script>
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function showSlide(index){
+    slides.forEach((slide,i)=>{
+        slide.classList.remove('active');
+        dots[i].classList.remove('active');
+        if(i === index) {
+            slide.classList.add('active');
+            dots[i].classList.add('active');
+        }
+    });
+}
+
+document.getElementById('prev').onclick = () => {
+    currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
+    showSlide(currentSlide);
+}
+
+document.getElementById('next').onclick = () => {
+    currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
+    showSlide(currentSlide);
+}
+
+// Click on dots
+dots.forEach((dot,i) => {
+    dot.onclick = () => {
+        currentSlide = i;
+        showSlide(currentSlide);
+    }
+});
+
+// Auto slide
+setInterval(()=>{
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+}, 6000);
+</script>
+
+</body>
+</html>
