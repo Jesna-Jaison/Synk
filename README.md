@@ -32,7 +32,7 @@ Work together on projects seamlessly
 
 Synk enhances collaboration, productivity, and engagement through intelligent matchmaking and real-time interaction.
 
-#❗ Problem Statement
+# ❗ Problem Statement
 
 Students often struggle to find compatible study partners or peers who share similar skills and academic goals.
 
@@ -117,13 +117,13 @@ npm start
 # 📷 Project Documentation
 🖥️ Screenshots
 
-Home Page: Hero section, swipe feature, dashboard navigation
+Home Page: Hero section, swipe feature, dashboard navigation :https://drive.google.com/drive/folders/1P2cIKc99cOvc-EbvwhzvJ-MwtcqQqiFr
 
-Swipe Page: Discover matches with compatibility tags
+Swipe Page: Discover matches with compatibility tags :https://drive.google.com/drive/folders/1vxq5DJyupkXSGNHPfEEKN9J40ginIctn
 
-Dashboard: Profile management, group actions, project participation
+Dashboard: Profile management, group actions, project participation:https://drive.google.com/drive/folders/1_rk43z5MYlLJXeFmc2FaD0OSJBKZ3EMU
 
-(Add screenshots here when available)
+
 
 📊 System Architecture
 
@@ -163,6 +163,11 @@ Start Chat & Connect
 
 Join Groups & Projects
 
+Diagram URL:https://drive.google.com/drive/folders/1vsLyInFO_kt6XzB8aoHZH2JNLGnyMPkx
+
+# Project Demo
+
+ Video 
 
 # 👨‍💻 Team Contributions
 
@@ -184,5 +189,4 @@ Testing
 
 # 📜 License
 
-This project is licensed under the MIT License – a permissive and widely used open-source license.
-
+This project is licensed under the MIT License – see the https://github.com/Jesna-Jaison/Synk/blob/main/LICENSE file for details.
