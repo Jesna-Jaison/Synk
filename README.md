@@ -15,7 +15,7 @@ Paviya T V – Vidya Academy of Science and Technology
 # 🌐 Hosted Project Link
 
 🔗 https://earnest-pasca-04f855.netlify.app/
-
+ 
 # 📌 Project Description
 
 Synk is a social learning platform designed to connect students based on shared skills, interests, and goals.
