@@ -1,4 +1,4 @@
-#Synk 🎯
+#**Synk 🎯**
 
 #Basic Details
 
