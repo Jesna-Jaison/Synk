@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synk - Sports Team Match</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#F5F3FF;color:#2D1B69;display:flex;flex-direction:column;align-items:center;}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 8%;background:rgba(255,255,255,.9);backdrop-filter:blur(10px);box-shadow:0 4px 20px rgba(139,92,246,.08);width:100%;}
+.logo{font-size:26px;font-weight:700;color:#8B5CF6;}
+nav ul{display:flex;list-style:none;gap:30px;}
+nav a{text-decoration:none;color:#444;font-weight:500;transition:.3s;}
+nav a:hover{color:#8B5CF6;}
+
+.header{padding:40px 8%;text-align:center;width:100%;}
+.header h1{font-size:36px;color:#8B5CF6;margin-bottom:10px;}
+.header p{font-size:16px;color:#444;}
+
+.swipe-container{
+    position:relative;
+    width:350px;
+    height:480px;
+    margin-bottom:40px;
+}
+.swipe-card{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:white;
+    border-radius:20px;
+    box-shadow:0 20px 40px rgba(139,92,246,.2);
+    padding:25px;
+    text-align:center;
+    cursor:grab;
+    transition:transform 0.3s ease;
+    user-select:none;
+}
+.swipe-card img{
+    width:130px;height:130px;border-radius:50%;margin-bottom:15px;object-fit:cover;
+}
+.tag{
+    display:inline-block;padding:6px 14px;margin:6px;background:#C4B5FD;border-radius:20px;font-size:12px;
+}
+
+.swipe-buttons{display:flex;justify-content:center;margin-top:10px;}
+.swipe-buttons button{
+    margin:0 15px;
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+.reject{background:#eee;}
+.accept{background:#8B5CF6;color:white;}
+
+.match-popup{
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.6);
+    display:flex;justify-content:center;align-items:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.3s ease;
+    z-index:200;
+}
+.match-popup.active{opacity:1;pointer-events:auto;}
+.match-card{
+    background:white;padding:40px;border-radius:20px;text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.3);}
+.match-card img{width:120px;height:120px;border-radius:50%;object-fit:cover;margin:15px;}
+.match-card h2{color:#8B5CF6;margin-bottom:10px;}
+.match-card button{padding:12px 25px;border:none;border-radius:25px;background:#8B5CF6;color:white;font-weight:600;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Synk</div>
+    <ul>
+        <li><a href="index2.html">Home</a></li>
+        <li><a href="group.html">Study Groups</a></li>
+        <li><a href="hack.html">Hackathons</a></li>
+        <li><a href="#">Sports</a></li>
+    </ul>
+</nav>
+
+<section class="header">
+    <h1>Find Your Sports Team Partner</h1>
+    <p>Swipe to connect with teammates for your sports teams.</p>
+</section>
+
+<div class="swipe-container" id="cardStack"></div>
+<div class="swipe-buttons">
+    <button class="reject" onclick="buttonSwipe(-1)">Pass</button>
+    <button class="accept" onclick="buttonSwipe(1)">Connect</button>
+</div>
+
+<!-- Match Popup -->
+<div class="match-popup" id="matchPopup">
+    <div class="match-card">
+        <h2>It's a Match! 🎉</h2>
+        <div id="matchImgs"></div>
+        <a href="sportchat.html">
+        <button onclick="closeMatch()">Start Chat</button>
+        </a>
+    </div>
+</div>
+
+<script>
+// Sample sports participants
+let participants=[
+    {img:"https://randomuser.me/api/portraits/men/55.jpg",name:"Alex",sports:["Football","Basketball"]},
+    {img:"https://randomuser.me/api/portraits/women/66.jpg",name:"Emma",sports:["Tennis","Badminton"]},
+    {img:"https://randomuser.me/api/portraits/men/77.jpg",name:"Ryan",sports:["Soccer","Swimming"]},
+    {img:"https://randomuser.me/api/portraits/women/88.jpg",name:"Olivia",sports:["Volleyball","Football"]},
+    {img:"https://randomuser.me/api/portraits/men/90.jpg",name:"Noah",sports:["Basketball","Tennis"]}
+];
+
+const stack=document.getElementById("cardStack");
+let isDragging=false, startX, currentX, currentCard;
+
+function loadCards(){
+    stack.innerHTML="";
+    participants.slice(0).reverse().forEach(p=>{
+        const card=document.createElement("div");
+        card.className="swipe-card";
+        card.innerHTML=`
+            <img src="${p.img}">
+            <h3>${p.name}</h3>
+            ${p.sports.map(s=>`<span class="tag">${s}</span>`).join("")}
+        `;
+        stack.appendChild(card);
+
+        // Drag events
+        card.addEventListener('mousedown',startDrag);
+        card.addEventListener('touchstart',startDrag);
+    });
+}
+loadCards();
+
+function startDrag(e){
+    currentCard=this;
+    isDragging=true;
+    startX=e.type==="touchstart"?e.touches[0].clientX:e.clientX;
+    document.addEventListener('mousemove',onDrag);
+    document.addEventListener('touchmove',onDrag);
+    document.addEventListener('mouseup',endDrag);
+    document.addEventListener('touchend',endDrag);
+}
+
+function onDrag(e){
+    if(!isDragging) return;
+    currentX=(e.type==="touchmove"?e.touches[0].clientX:e.clientX)-startX;
+    currentCard.style.transform=`translateX(${currentX}px) rotate(${currentX/10}deg)`;
+}
+
+function endDrag(){
+    isDragging=false;
+    if(Math.abs(currentX)>120){
+        const direction=currentX>0?1:-1;
+        swipe(direction);
+    } else {
+        currentCard.style.transform="translateX(0px) rotate(0deg)";
+    }
+    document.removeEventListener('mousemove',onDrag);
+    document.removeEventListener('touchmove',onDrag);
+    document.removeEventListener('mouseup',endDrag);
+    document.removeEventListener('touchend',endDrag);
+}
+
+function swipe(direction){
+    const person=participants.shift();
+    if(direction===1){
+        showMatch(person);
+    }
+    loadCards();
+}
+
+function buttonSwipe(direction){
+    const person=participants.shift();
+    if(direction===1){
+        showMatch(person);
+    }
+    loadCards();
+}
+
+// Match popup
+const matchPopup=document.getElementById('matchPopup');
+const matchImgs=document.getElementById('matchImgs');
+function showMatch(person){
+    // Redirect to sports chat page with partner info
+    const partnerName = encodeURIComponent(person.name);
+    const partnerImg = encodeURIComponent(person.img);
+    window.location.href = `sportchat.html?name=${partnerName}&img=${partnerImg}`;
+}
+
+function closeMatch(){
+    matchPopup.classList.remove('active');
+}
+</script>
+<script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+  from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD0819UL5ciYMK3gixRnIC4ty6ySGxReAg",
+    authDomain: "synk-27b9a.firebaseapp.com",
+    projectId: "synk-27b9a",
+    storageBucket: "synk-27b9a.firebasestorage.app",
+    messagingSenderId: "404969184639",
+    appId: "1:404969184639:web:aec708cc8475d51c780e4a",
+    measurementId: "G-CTPM2K25NN"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // SIGN UP
+  document.getElementById("signupBtn").onclick = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Account created successfully!");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  // LOGIN
+  document.getElementById("loginBtn").onclick = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Login successful!");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+</script>
+
+</body>
+</html>
