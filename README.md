@@ -163,9 +163,6 @@ Start Chat & Connect
 
 Join Groups & Projects
 
-Diagram URL:https://drive.google.com/drive/folders/1vsLyInFO_kt6XzB8aoHZH2JNLGnyMPkx
-
-# Project Demo
 
  Video 
 
