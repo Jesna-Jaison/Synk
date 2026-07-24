@@ -114,17 +114,6 @@ npm install
 ▶️ Run the Project
 npm start
 
-# 📷 Project Documentation
-🖥️ Screenshots
-
-Home Page: Hero section, swipe feature, dashboard navigation :https://drive.google.com/drive/folders/1P2cIKc99cOvc-EbvwhzvJ-MwtcqQqiFr
-
-Swipe Page: Discover matches with compatibility tags :https://drive.google.com/drive/folders/1vxq5DJyupkXSGNHPfEEKN9J40ginIctn
-
-Dashboard: Profile management, group actions, project participation:https://drive.google.com/drive/folders/1_rk43z5MYlLJXeFmc2FaD0OSJBKZ3EMU
-
-
-
 📊 System Architecture
 
 Components:
@@ -163,8 +152,6 @@ Start Chat & Connect
 
 Join Groups & Projects
 
-
- Video 
 
 # 👨‍💻 Team Contributions
 
